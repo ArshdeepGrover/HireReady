@@ -1,61 +1,59 @@
 /**
  * Theme preference.
  *
- * The chosen theme is written to <html data-theme>. Each page also runs a tiny
- * inline copy of this logic before first paint (see the <head> of each HTML
- * file) so there is no flash of the wrong palette.
+ * Light is the default. The OS setting is deliberately ignored: visitors only
+ * get dark mode by asking for it with the toggle. The chosen theme is written to
+ * <html data-theme>, and /theme-init.js applies the stored value before first
+ * paint so there is no flash of the wrong palette.
  */
 
 export type Theme = 'light' | 'dark';
-export type ThemePreference = Theme | 'system';
 
 const STORAGE_KEY = 'hireready:theme';
+const DEFAULT_THEME: Theme = 'light';
+
+/** Browser UI colour per theme. Must match --paper in tokens.css. */
+const BROWSER_UI_COLOR: Record<Theme, string> = {
+  light: '#f4f2ec',
+  dark: '#0e1014',
+};
 
 /** localStorage throws in private mode in some browsers. Never let that break the page. */
-function readStored(): ThemePreference | null {
+function readStored(): Theme | null {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    return value === 'light' || value === 'dark' || value === 'system' ? value : null;
+    return value === 'light' || value === 'dark' ? value : null;
   } catch {
     return null;
   }
 }
 
-function writeStored(value: ThemePreference): void {
+function writeStored(value: Theme): void {
   try {
-    if (value === 'system') localStorage.removeItem(STORAGE_KEY);
-    else localStorage.setItem(STORAGE_KEY, value);
+    localStorage.setItem(STORAGE_KEY, value);
   } catch {
     // Preference simply will not persist. Not worth surfacing.
   }
 }
 
-function systemTheme(): Theme {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-export function preference(): ThemePreference {
-  return readStored() ?? 'system';
-}
-
 export function resolvedTheme(): Theme {
-  const stored = readStored();
-  return stored && stored !== 'system' ? stored : systemTheme();
+  return readStored() ?? DEFAULT_THEME;
 }
 
-function apply(pref: ThemePreference): void {
-  const root = document.documentElement;
-  if (pref === 'system') root.removeAttribute('data-theme');
-  else root.setAttribute('data-theme', pref);
+function apply(theme: Theme): void {
+  document.documentElement.setAttribute('data-theme', theme);
+  document
+    .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    ?.setAttribute('content', BROWSER_UI_COLOR[theme]);
 }
 
-export function setTheme(pref: ThemePreference): void {
-  writeStored(pref);
-  apply(pref);
+export function setTheme(theme: Theme): void {
+  writeStored(theme);
+  apply(theme);
   announce();
 }
 
-/** Flips between light and dark, dropping out of "follow system". */
+/** Flips between light and dark. */
 export function toggleTheme(): Theme {
   const next: Theme = resolvedTheme() === 'dark' ? 'light' : 'dark';
   setTheme(next);
@@ -70,18 +68,13 @@ function announce(): void {
   button.setAttribute('aria-pressed', String(isDark));
 }
 
-/** Wires the toggle button and keeps "follow system" live. */
+/** Wires the toggle button. */
 export function initTheme(): void {
-  apply(preference());
+  apply(resolvedTheme());
   announce();
 
   const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
   button?.addEventListener('click', () => {
     toggleTheme();
-  });
-
-  // Only meaningful while the visitor has not made an explicit choice.
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (preference() === 'system') announce();
   });
 }

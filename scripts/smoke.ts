@@ -17,13 +17,13 @@ function expect(label: string, condition: boolean, detail: string): void {
     console.log(`  ok    ${label}`);
   } else {
     failures += 1;
-    console.log(`  FAIL  ${label} — ${detail}`);
+    console.log(`  FAIL  ${label} - ${detail}`);
   }
 }
 
 for (const sample of SAMPLES) {
   const report = analyse(fromPastedText(sample.text));
-  console.log(`\n${sample.label} (${sample.id}) — ${report.score}/100 · ${report.band.label}`);
+  console.log(`\n${sample.label} (${sample.id}) - ${report.score}/100 · ${report.band.label}`);
   console.log(
     `  words ${report.facts.wordCount} · bullets ${report.facts.bulletCount} · sections ${report.facts.sectionCount}`,
   );

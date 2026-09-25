@@ -143,7 +143,7 @@ export const hygieneChecks: CheckFn = (facts, doc) => {
   checks.push({
     id: 'hygiene.length',
     category: 'hygiene',
-    label: `Length — ${words} words`,
+    label: `Length - ${words} words`,
     weight: 5,
     ...(ideal
       ? { state: 'pass' as const, score: 5, summary: 'About right for a single page.' }
@@ -173,7 +173,7 @@ export const hygieneChecks: CheckFn = (facts, doc) => {
     checks.push({
       id: 'hygiene.pages',
       category: 'hygiene',
-      label: `Pages — ${doc.pageCount}`,
+      label: `Pages - ${doc.pageCount}`,
       weight: 4,
       ...(doc.pageCount === 1
         ? { state: 'pass' as const, score: 4, summary: 'One page, which is the expectation for a first job.' }

@@ -88,7 +88,7 @@ function headingKey(line: string): SectionKey | null {
   // Strip decoration some templates add around headings.
   const cleaned = trimmed
     .replace(/^[^a-z0-9]+/i, '')
-    .replace(/[\s:_\-–—=|]+$/, '')
+    .replace(/[\s:_\-\u2013\u2014=|]+$/, '')
     .toLowerCase();
   if (!cleaned) return null;
 

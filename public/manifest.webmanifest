@@ -1,5 +1,5 @@
 {
-  "name": "HireReady — resume checker",
+  "name": "HireReady - resume checker",
   "short_name": "HireReady",
   "description": "Check your resume against what screening software and recruiters look at first. Runs entirely in your browser.",
   "start_url": "/resume-score",

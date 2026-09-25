@@ -26,7 +26,7 @@ export function reportToMarkdown(report: Report, match: JobMatch | null): string
 
   lines.push('# HireReady resume report');
   lines.push('');
-  lines.push(`**Score:** ${report.score}/100 — ${report.band.label}`);
+  lines.push(`**Score:** ${report.score}/100 - ${report.band.label}`);
   lines.push('');
   lines.push(report.band.message);
   lines.push('');
@@ -41,7 +41,7 @@ export function reportToMarkdown(report: Report, match: JobMatch | null): string
   lines.push('## Scores by area');
   lines.push('');
   for (const category of report.categories) {
-    lines.push(`- **${category.name}** — ${category.pct}% (${category.score}/${category.weight})`);
+    lines.push(`- **${category.name}** - ${category.pct}% (${category.score}/${category.weight})`);
   }
   lines.push('');
 
@@ -51,7 +51,7 @@ export function reportToMarkdown(report: Report, match: JobMatch | null): string
     lines.push('Every check passed. Nothing is outstanding.');
   } else {
     report.actions.forEach((check, index) => {
-      lines.push(`${index + 1}. **${check.label}** — ${check.summary}`);
+      lines.push(`${index + 1}. **${check.label}** - ${check.summary}`);
       if (check.fix) lines.push(`   ${check.fix}`);
       lines.push('');
     });
@@ -64,7 +64,7 @@ export function reportToMarkdown(report: Report, match: JobMatch | null): string
     lines.push(`### ${category.name} (${category.score}/${category.weight})`);
     lines.push('');
     for (const check of category.checks) {
-      lines.push(`- ${STATE_MARK[check.state]} **${check.label}** — ${check.summary}`);
+      lines.push(`- ${STATE_MARK[check.state]} **${check.label}** - ${check.summary}`);
       if (check.fix) lines.push(`      Fix: ${check.fix}`);
       if (check.evidence?.length) lines.push(`      Found: ${check.evidence.join(', ')}`);
     }

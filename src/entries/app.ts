@@ -1,4 +1,4 @@
-/** Entry point for /resume-score — the analyser. */
+/** Entry point for /resume-score - the analyser. */
 
 import '../styles/tokens.css';
 import '../styles/base.css';

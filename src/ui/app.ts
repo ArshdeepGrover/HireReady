@@ -256,7 +256,7 @@ export function initApp(): void {
         // Still show the report: the parseability checks are the whole point here.
         analyseDoc(doc, true);
         setStatus(
-          'Almost no text came out of that file. It is probably a scan or an image — see the first check below.',
+          'Almost no text came out of that file. It is probably a scan or an image - see the first check below.',
           'error',
         );
         return;

@@ -118,7 +118,7 @@ export const SAMPLES: readonly Sample[] = [
 ];
 
 export const SAMPLE_JOB_DESCRIPTION = [
-  'Software Development Engineer — Full Stack (Angular, Ruby on Rails)',
+  'Software Development Engineer - Full Stack (Angular, Ruby on Rails)',
   '',
   'We are an edtech company building live learning tools for 200,000 students across India.',
   'You will join the product engineering team that owns our web platform, working remotely or from',

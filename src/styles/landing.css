@@ -94,12 +94,6 @@ main {
   background-image: linear-gradient(transparent 60%, var(--mark-soft) 60%, var(--mark-soft) 90%, transparent 90%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .hero__title em {
-    background-image: linear-gradient(transparent 60%, var(--mark-soft) 60%, var(--mark-soft) 90%, transparent 90%);
-  }
-}
-
 .hero__lede {
   margin-top: var(--space-5);
   font-size: clamp(1.0625rem, 0.5vw + 0.95rem, 1.1875rem);

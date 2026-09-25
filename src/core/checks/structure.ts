@@ -7,7 +7,7 @@ import type { CheckFn, CheckResult, SectionKey } from '../types';
 /** Four-digit years, and the ranges resumes use around them. */
 const YEAR_RE = /\b(?:19|20)\d{2}\b/g;
 const RANGE_RE =
-  /\b(?:(?:19|20)\d{2}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*(?:19|20)?\d{2})\s*(?:-|–|—|to|until|till)\s*(?:(?:19|20)\d{2}|present|current|ongoing|now|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*(?:19|20)?\d{2})/gi;
+  /\b(?:(?:19|20)\d{2}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*(?:19|20)?\d{2})\s*(?:-|\u2013|\u2014|to|until|till)\s*(?:(?:19|20)\d{2}|present|current|ongoing|now|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*(?:19|20)?\d{2})/gi;
 
 const LABELS: Record<SectionKey, string> = {
   education: 'Education',

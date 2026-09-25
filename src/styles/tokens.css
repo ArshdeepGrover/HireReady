@@ -168,52 +168,7 @@
 }
 
 /*
- * Respect the OS preference until the visitor picks a theme explicitly, at
- * which point data-theme on <html> takes over. The script in each page's head
- * sets data-theme before first paint, so this block only covers the no-JS case.
+ * There is deliberately no prefers-color-scheme fallback: light is the default
+ * regardless of the OS setting. Dark applies only when data-theme="dark" is set
+ * on <html>, which happens after the visitor uses the toggle.
  */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    color-scheme: dark;
-    --paper: #0e1014;
-    --paper-alt: #13161c;
-    --surface: #161920;
-    --surface-sunk: #1c2029;
-    --surface-raised: #1a1d25;
-
-    --ink: #eceef2;
-    --ink-muted: #a4a9b6;
-    --ink-faint: #8a90a0;
-
-    --line: #262a34;
-    --line-strong: #383d4a;
-
-    --accent: #a3b3ff;
-    --accent-hover: #c0cbff;
-    --accent-ink: #0d1233;
-    --accent-soft: #1a2042;
-    --accent-line: #2f3a72;
-
-    --mark: #e6c737;
-    --mark-soft: #4a4116;
-
-    --good: #62c697;
-    --good-soft: #10241b;
-    --good-line: #1f4533;
-
-    --warn: #d9ba52;
-    --warn-soft: #252010;
-    --warn-line: #4a3f1b;
-
-    --bad: #ff8e84;
-    --bad-soft: #2b1513;
-    --bad-line: #52271f;
-
-    --shadow-sm: none;
-    --shadow: 0 1px 0 rgb(0 0 0 / 40%);
-    --shadow-lg: 0 1px 0 rgb(0 0 0 / 50%), 0 24px 48px -30px rgb(0 0 0 / 90%);
-    --ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
-
-    --grain-opacity: 0;
-  }
-}
