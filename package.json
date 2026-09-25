@@ -1,0 +1,33 @@
+{
+  "name": "hireready",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HireReady checks a resume against what applicant tracking software and recruiters look at first. Runs entirely in the browser.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Arshdeep Singh Grover",
+  "homepage": "https://hireready.arshdeepgrover.dev",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "rolldown scripts/smoke.ts --format esm --platform node -o .tmp/smoke.mjs && node .tmp/smoke.mjs",
+    "assets": "node scripts/generate-assets.mjs",
+    "fonts": "node scripts/fetch-fonts.mjs",
+    "clean": "rm -rf dist .tmp node_modules/.vite"
+  },
+  "dependencies": {
+    "jszip": "3.10.2",
+    "pdfjs-dist": "6.3.289"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "sharp": "0.35.4",
+    "typescript": "5.9.3",
+    "vite": "8.3.1"
+  }
+}

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Privacy — HireReady</title>
+    <meta
+      name="description"
+      content="HireReady processes your resume entirely in your browser. No uploads, no accounts, no analytics, no third-party requests. Here is exactly what happens to your data."
+    />
+    <link rel="canonical" href="https://hireready.arshdeepgrover.dev/privacy" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Privacy — HireReady" />
+    <meta
+      property="og:description"
+      content="No uploads, no accounts, no analytics. Exactly what happens to your resume, and how to verify it."
+    />
+    <meta property="og:url" content="https://hireready.arshdeepgrover.dev/privacy" />
+    <meta property="og:image" content="https://hireready.arshdeepgrover.dev/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <link rel="preload" href="/fonts/ibm-plex-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+
+    <script src="/theme-init.js"></script>
+    <script type="module" src="/src/entries/landing.ts"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-site-header>
+      <div class="container site-header__inner">
+        <a class="brand" href="/">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="4" fill="var(--ink)" />
+            <path d="M8.5 9V23M17.5 9V23" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+            <path d="M8.5 16h9" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+            <circle cx="23.5" cy="22" r="3.2" fill="var(--mark)" />
+          </svg>
+          <span>Hire<em>Ready</em></span>
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a class="site-nav__link" href="/#how" data-optional="true">How it works</a>
+          <a class="site-nav__link" href="/#faq" data-optional="true">FAQ</a>
+          <button
+            class="icon-btn theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch to dark theme"
+            aria-pressed="false"
+          >
+            <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4" />
+            </svg>
+            <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+          <a class="btn btn--primary btn--sm" href="/resume-score" style="margin-left: var(--space-2)">
+            Check my resume
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="page-head">
+        <div class="container container--narrow">
+          <span class="eyebrow">Privacy</span>
+          <h1>Nothing leaves your browser</h1>
+          <p>
+            Not a marketing line. There is no server that could receive your resume, because the
+            analysis is a JavaScript program running on your own machine.
+          </p>
+        </div>
+      </div>
+
+      <div class="container container--narrow">
+        <article class="prose">
+          <p class="updated">Last updated 24 September 2026</p>
+
+          <p class="callout">
+            <strong>The short version.</strong> HireReady collects nothing, stores nothing on a
+            server, sets no cookies, and runs no analytics. Your resume is read from disk into your
+            browser's memory, analysed there, and discarded when you close the tab.
+          </p>
+
+          <h2>What happens when you use it</h2>
+
+          <p>
+            When you choose a file, the browser hands HireReady the bytes of that file directly. The
+            PDF reader (pdf.js) and Word reader (JSZip) are JavaScript libraries that ship as part of
+            this website and execute locally. They turn the file into text. The scoring engine then
+            runs a list of checks over that text. All of this happens between your keyboard and your
+            screen.
+          </p>
+
+          <p>
+            The same is true of the job description box and everything you type into the resume
+            textarea.
+          </p>
+
+          <h2>What is stored, and where</h2>
+
+          <dl>
+            <div>
+              <dt>Your resume text — session storage, your device only</dt>
+              <dd>
+                So that refreshing the page does not lose your work, the text in the two boxes is
+                kept in your browser's <code>sessionStorage</code>. This is scoped to the tab: it is
+                erased when you close the tab, and it is never readable by another site. Pressing
+                <strong>Clear</strong> in the app erases it immediately.
+              </dd>
+            </div>
+            <div>
+              <dt>Your theme choice — local storage, your device only</dt>
+              <dd>
+                A single key, <code>hireready:theme</code>, holding the string
+                <code>light</code> or <code>dark</code>. Nothing else.
+              </dd>
+            </div>
+            <div>
+              <dt>Your resume file itself — nowhere</dt>
+              <dd>
+                The file is never copied, never persisted, and never transmitted. Once the text has
+                been extracted, the browser is free to discard the file contents from memory.
+              </dd>
+            </div>
+          </dl>
+
+          <h2>Third parties</h2>
+
+          <p>
+            There are none in the page. No analytics, no tag managers, no advertising, no error
+            reporting, no chat widget, no social embeds, and no font CDN — the webfonts are served
+            from this domain specifically so that no outside party learns you visited.
+          </p>
+
+          <p>
+            The one unavoidable party is the host. This site is static files served by a hosting
+            provider, which like every web server can see the standard request metadata: your IP
+            address, the page requested, and your user agent. That is a property of how the web
+            works, it applies before any of our code runs, and it never includes your resume.
+          </p>
+
+          <h2>How to verify all of this</h2>
+
+          <ul>
+            <li>
+              Open your browser's developer tools, go to the <strong>Network</strong> tab, then load
+              a resume. No request appears when you choose the file or when the report renders.
+            </li>
+            <li>
+              Stronger: load the page, disconnect from the internet, then analyse a resume. It works
+              normally, which is only possible if nothing is being sent.
+            </li>
+            <li>
+              Strongest: read the source. The project is open, and there is no <code>fetch</code>,
+              <code>XMLHttpRequest</code>, or <code>navigator.sendBeacon</code> call anywhere in it.
+            </li>
+          </ul>
+
+          <h2>Children</h2>
+
+          <p>
+            The tool is aimed at people old enough to be applying for work. It knowingly collects no
+            data from anyone, of any age, because it collects no data at all.
+          </p>
+
+          <h2>Changes</h2>
+
+          <p>
+            If HireReady ever gains a feature that needs a server — the rewrite suggestions on the
+            roadmap would — it will be opt-in, clearly marked at the point of use, and this page will
+            be updated before it ships. The client-side checks described today will stay
+            client-side.
+          </p>
+
+          <h2>Contact</h2>
+
+          <p>
+            Questions, or a correction to this page:
+            <a href="https://arshdeepgrover.dev" rel="noopener noreferrer" target="_blank">
+              arshdeepgrover.dev </a
+            >, or open an issue on
+            <a href="https://github.com/ArshdeepGrover" rel="noopener noreferrer" target="_blank">
+              GitHub </a
+            >.
+          </p>
+
+          <p style="margin-top: var(--space-10)">
+            <a class="btn btn--primary" href="/resume-score">Check my resume</a>
+          </p>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__base" style="margin-top: 0; border-top: 0; padding-top: 0">
+          <p>&copy; <span data-year>2026</span> HireReady. Built by Arshdeep Singh Grover.</p>
+          <p><a href="/">Back to the homepage</a></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

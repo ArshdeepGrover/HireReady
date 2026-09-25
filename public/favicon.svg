@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="HireReady">
+  <!--
+    The mark is an H (HireReady) with a highlighter-yellow dot at the lower
+    right: the one thing a reviewer marks on the page. Colours are hardcoded
+    rather than using currentColor so the icon renders correctly in browser
+    tabs and bookmarks, where CSS variables are unavailable.
+  -->
+  <rect width="32" height="32" rx="5" fill="#15181F"/>
+  <path d="M8.5 8.5V23.5M18 8.5V23.5" fill="none" stroke="#F4F2EC" stroke-width="3" stroke-linecap="round"/>
+  <path d="M8.5 16H18" fill="none" stroke="#F4F2EC" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24.5" cy="23" r="3.5" fill="#F2CD2C"/>
+</svg>

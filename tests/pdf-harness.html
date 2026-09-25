@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PDF parser harness</title>
+  </head>
+  <body>
+    <pre id="out">running…</pre>
+    <script type="module">
+      import { parseResumeFile } from '/src/core/parsers/index.ts';
+      import { analyse } from '/src/core/score.ts';
+
+      const out = document.getElementById('out');
+      const lines = [];
+      const log = (m) => {
+        lines.push(m);
+        out.textContent = lines.join('\n');
+      };
+
+      const fixtures = ['single-column.pdf', 'two-column.pdf', 'no-text.pdf'];
+
+      for (const name of fixtures) {
+        try {
+          const response = await fetch(`/__fixtures/${name}`);
+          const blob = await response.blob();
+          const file = new File([blob], name, { type: 'application/pdf' });
+
+          const doc = await parseResumeFile(file);
+          const report = analyse(doc);
+
+          log(`### ${name}`);
+          log(`source=${doc.source} pages=${doc.pageCount} density=${doc.meta.textDensity}`);
+          log(
+            `multiColumn=${doc.meta.multiColumn} tabularRows=${doc.meta.tabularRows} ` +
+              `imageOnlyPages=[${doc.meta.imageOnlyPages}] broken=${doc.meta.brokenGlyphs}`,
+          );
+          log(`hyperlinks=${doc.hyperlinks.length} warnings=${JSON.stringify(doc.warnings)}`);
+          log(`score=${report.score} band=${report.band.id} words=${report.facts.wordCount} bullets=${report.facts.bulletCount}`);
+          log(`sections=${report.facts.sectionCount} keys=${[...new Set(doc.text.match(/^[A-Z]{4,}.*$/gm) ?? [])].slice(0,8).join('|')}`);
+          const order = report.checks.find((c) => c.id === 'parse.order');
+          const text = report.checks.find((c) => c.id === 'parse.text');
+          log(`parse.order=${order?.state} :: ${order?.summary}`);
+          log(`parse.text=${text?.state} :: ${text?.summary}`);
+          log(`FIRST_LINES>>> ${doc.text.split('\n').slice(0, 3).join(' ~ ')}`);
+          log('');
+        } catch (error) {
+          log(`### ${name}`);
+          log(`ERROR: ${error && error.message ? error.message : String(error)}`);
+          log('');
+        }
+      }
+
+      log('DONE');
+    </script>
+  </body>
+</html>

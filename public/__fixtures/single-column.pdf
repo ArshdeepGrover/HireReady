@@ -1,0 +1,56 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 2172 >>
+stream
+BT /F1 20 Tf 1 0 0 1 60 790 Tm (Priya Nair) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 766 Tm (priya.nair@gmail.com | +91 98765 43210 | Pune, India) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 750 Tm (https://linkedin.com/in/priyanair | https://github.com/priyanair) Tj ET
+BT /F1 13 Tf 1 0 0 1 60 716 Tm (SKILLS) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 696 Tm (Languages: Python, JavaScript, SQL) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 680 Tm (Frameworks: Django, React, Node.js) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 664 Tm (Data: PostgreSQL, MongoDB, Redis) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 648 Tm (Tools: Git, Docker, AWS, Linux, Postman) Tj ET
+BT /F1 13 Tf 1 0 0 1 60 610 Tm (PROJECTS) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 590 Tm (Attendance Tracker - Django, PostgreSQL \(Feb 2026 - Apr 2026\)) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 574 Tm (- Built a QR-based attendance system now recording 1,800 entries a week) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 558 Tm (- Designed a PostgreSQL schema with 7 tables, cutting report time to 400ms) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 542 Tm (- Automated weekly summary emails, saving staff roughly 5 hours a week) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 526 Tm () Tj ET
+BT /F1 11 Tf 1 0 0 1 60 510 Tm (Recipe Search API - Node.js, MongoDB \(Oct 2025 - Dec 2025\)) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 494 Tm (- Developed a REST API serving 12,000 recipes with full-text search) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 478 Tm (- Reduced median response time from 900ms to 120ms by adding Redis caching) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 462 Tm (- Wrote 30 unit tests with Jest, reaching 88% coverage) Tj ET
+BT /F1 13 Tf 1 0 0 1 60 410 Tm (EXPERIENCE) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 390 Tm (Backend Intern, Northwind Labs, Pune \(Jun 2025 - Aug 2025\)) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 374 Tm (- Migrated 22 API endpoints from Flask to Django, cutting errors by 40%) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 358 Tm (- Fixed 35 reported bugs and cleared the triage backlog two weeks early) Tj ET
+BT /F1 13 Tf 1 0 0 1 60 330 Tm (EDUCATION) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 310 Tm (B.Tech Computer Science, Pune Institute of Technology \(2022 - 2026\)) Tj ET
+BT /F1 11 Tf 1 0 0 1 60 294 Tm (Coursework: Data Structures, Operating Systems, DBMS, Computer Networks) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000002465 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2562
+%%EOF

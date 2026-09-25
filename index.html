@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>HireReady — see your resume the way a screener does</title>
+    <meta
+      name="description"
+      content="Free resume checker for first-time job seekers. HireReady reads your resume the way applicant tracking software does, scores it across 30+ checks, and names the few things worth fixing. Nothing is uploaded."
+    />
+    <link rel="canonical" href="https://hireready.arshdeepgrover.dev/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1014" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HireReady" />
+    <meta property="og:title" content="HireReady — see your resume the way a screener does" />
+    <meta
+      property="og:description"
+      content="A free resume checker that runs entirely in your browser. 30+ checks, a prioritised fix list, and nothing uploaded."
+    />
+    <meta property="og:url" content="https://hireready.arshdeepgrover.dev/" />
+    <meta property="og:image" content="https://hireready.arshdeepgrover.dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HireReady: a resume score of 42 out of 100 with a list of fixes." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HireReady — see your resume the way a screener does" />
+    <meta
+      name="twitter:description"
+      content="A free resume checker that runs entirely in your browser. Nothing uploaded."
+    />
+    <meta name="twitter:image" content="https://hireready.arshdeepgrover.dev/og.png" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <link rel="preload" href="/fonts/ibm-plex-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+
+    <script src="/theme-init.js"></script>
+    <script type="module" src="/src/entries/landing.ts"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HireReady",
+        "url": "https://hireready.arshdeepgrover.dev/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any browser",
+        "description": "A resume checker for first-time job seekers that runs entirely in the browser. It scores a resume across more than 30 checks covering machine readability, contact details, structure, writing, skills and presentation.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Arshdeep Singh Grover",
+          "url": "https://arshdeepgrover.dev"
+        },
+        "featureList": [
+          "Runs fully client-side with no upload",
+          "Detects PDF layouts that break resume parsers",
+          "Prioritised list of fixes",
+          "Optional job description keyword comparison"
+        ]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-site-header>
+      <div class="container site-header__inner">
+        <a class="brand" href="/">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="4" fill="var(--ink)" />
+            <path d="M8.5 9V23M17.5 9V23" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+            <path d="M8.5 16h9" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+            <circle cx="23.5" cy="22" r="3.2" fill="var(--mark)" />
+          </svg>
+          <span>Hire<em>Ready</em></span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main">
+          <a class="site-nav__link" href="#how" data-optional="true">How it works</a>
+          <a class="site-nav__link" href="#checks" data-optional="true">What it checks</a>
+          <a class="site-nav__link" href="#privacy" data-optional="true">Privacy</a>
+          <a class="site-nav__link" href="#faq" data-optional="true">FAQ</a>
+          <button
+            class="icon-btn theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch to dark theme"
+            aria-pressed="false"
+          >
+            <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4" />
+            </svg>
+            <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+          <a class="btn btn--primary btn--sm" href="/resume-score" style="margin-left: var(--space-2)">
+            Check my resume
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ hero ============ -->
+      <section class="hero">
+        <div class="container hero__grid">
+          <div>
+            <span class="badge badge--accent">
+              <span class="badge__dot"></span>
+              Free · No sign-up · Nothing uploaded
+            </span>
+
+            <h1 class="hero__title">Your resume is <em>parsed before it is read</em></h1>
+
+            <p class="hero__lede">
+              Before a person sees it, your resume is converted to plain text by software. Columns
+              collapse, text boxes vanish, and a page of personal details pushes your projects off the
+              screen. HireReady reads it the same way, then tells you the few things worth fixing.
+            </p>
+
+            <div class="hero__actions">
+              <a class="btn btn--primary btn--lg" href="/resume-score">Check my resume</a>
+              <a class="btn btn--secondary btn--lg" href="#compare">See a real example</a>
+            </div>
+
+            <ul class="hero__notes">
+              <li class="hero__note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                No account
+              </li>
+              <li class="hero__note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                No file upload
+              </li>
+              <li class="hero__note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                Results in about a second
+              </li>
+            </ul>
+          </div>
+
+          <!-- illustrative report card -->
+          <div class="preview" role="img" aria-label="Example HireReady report showing a score of 42 out of 100, with three failing checks: text boxes, results with numbers, and outdated personal details.">
+            <div class="preview__bar">
+              <span class="preview__dots"><span></span><span></span><span></span></span>
+              <span class="preview__label">hireready · report</span>
+            </div>
+            <div class="preview__body">
+              <div class="preview__score">
+                <span class="preview__number"><b>42</b><i>/100</i></span>
+                <span class="preview__verdict">
+                  <strong>Rebuild it</strong>
+                  <span>3 checks failing, 4 need work</span>
+                </span>
+              </div>
+              <div class="preview__list">
+                <div class="preview__row" data-state="fail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <span>
+                    <b>Text boxes and tables</b>
+                    <span>340 characters sit inside shapes most parsers skip</span>
+                  </span>
+                </div>
+                <div class="preview__row" data-state="fail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <span>
+                    <b>Results with numbers</b>
+                    <span>Nothing is quantified</span>
+                  </span>
+                </div>
+                <div class="preview__row" data-state="warn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 9v4M12 17h.01"/></svg>
+                  <span>
+                    <b>No dated personal details</b>
+                    <span>Father's name, date of birth, marital status</span>
+                  </span>
+                </div>
+                <div class="preview__row" data-state="pass">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>
+                    <b>Email and phone</b>
+                    <span>Both found in the first three lines</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ the pipeline ============ -->
+      <section class="section section--alt" id="how">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">What actually happens</span>
+            <h2 class="section__title">Three things stand between you and a reply</h2>
+            <p class="section__lede">
+              None of them involve a person reading carefully. Understanding the order they happen in
+              is most of the job.
+            </p>
+          </div>
+
+          <div class="pipeline">
+            <div class="pipeline__item">
+              <h3>It gets converted</h3>
+              <p>
+                Your PDF or Word file is turned into plain text. A two-column layout gets read
+                straight across and interleaves into nonsense. Text boxes, headers and images are
+                often dropped entirely. If you exported an image, it reads as blank.
+              </p>
+            </div>
+            <div class="pipeline__item">
+              <h3>It gets searched</h3>
+              <p>
+                Recruiters filter the converted text by keyword: a language, a framework, a degree, a
+                city. Skills you have but never named are invisible here, and so is anything trapped
+                in a graphic.
+              </p>
+            </div>
+            <div class="pipeline__item">
+              <h3>It gets skimmed</h3>
+              <p>
+                If it surfaces, someone gives the top third a few seconds. An objective saying you are
+                hardworking and a block listing your father's name both burn that time without
+                telling them anything.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ before / after ============ -->
+      <section class="section" id="compare">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">Same person, same history</span>
+            <h2 class="section__title">49 out of 100, then 100 out of 100</h2>
+            <p class="section__lede">
+              This is my own resume, written twice. Both versions are bundled in the app, so you can
+              load either one and see these exact scores for yourself. Nothing was added to the
+              experience. It was only written down properly.
+            </p>
+          </div>
+
+          <div class="compare">
+            <div class="compare__panel" data-kind="before">
+              <div class="compare__head">
+                <span class="badge badge--bad">Before</span>
+                <span class="compare__score">49<span class="muted" style="font-size: var(--text-sm)">/100</span></span>
+              </div>
+              <p class="compare__quote">
+                EXPERIENCE<br />
+                Commudle<br />
+                - Responsible for working on Angular and Ruby on Rails projects<br />
+                - Was involved in the payment gateway integration also
+              </p>
+              <ul class="compare__notes">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <span>Opens with a duty, not an action</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <span>No number anywhere, so nothing is verifiable</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  <span>No dates, no links, and a declaration nobody reads</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="compare__panel" data-kind="after">
+              <div class="compare__head">
+                <span class="badge badge--good">After</span>
+                <span class="compare__score">100<span class="muted" style="font-size: var(--text-sm)">/100</span></span>
+              </div>
+              <p class="compare__quote">
+                Software Developer, Commudle (Aug 2022 – Apr 2024)<br />
+                - Built reusable Angular components in TypeScript and SCSS, improving frontend load times by 20%<br />
+                - Integrated Google Tag Manager for real-time analytics, so tracking changes ship without a redeploy<br />
+                - Designed and implemented secure Razorpay payment integrations
+              </p>
+              <ul class="compare__notes">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Every bullet starts with what was done</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Numbers make each claim checkable in an interview</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>The stack is named, so keyword searches find it</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p style="margin-top: var(--space-6)">
+            <a class="btn btn--secondary" href="/resume-score">Load both samples in the app</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ what it checks ============ -->
+      <section class="section section--alt" id="checks">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">Six areas, 30-plus checks</span>
+            <h2 class="section__title">What it looks at</h2>
+            <p class="section__lede">
+              Each check explains what it found and what to do about it. The report is ordered by how
+              much the fix is worth, so you can stop whenever you run out of time.
+            </p>
+          </div>
+
+          <div class="features">
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
+              </span>
+              <h3>Machine readable</h3>
+              <p>
+                The checks that matter most, because failing them can make your resume score as if it
+                were blank.
+              </p>
+              <ul class="feature__list">
+                <li>Two-column layouts and reading order</li>
+                <li>Scans and image-only exports</li>
+                <li>Text boxes, shapes and tables</li>
+                <li>Broken font encoding</li>
+              </ul>
+            </article>
+
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+              </span>
+              <h3>Contact and links</h3>
+              <p>Whether someone who wants to hire you can actually reach you, and see your work.</p>
+              <ul class="feature__list">
+                <li>Email and phone, and where they sit</li>
+                <li>Contact details stranded in a page header</li>
+                <li>LinkedIn, GitHub, portfolio</li>
+                <li>Addresses that read as a school account</li>
+              </ul>
+            </article>
+
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>
+              </span>
+              <h3>Structure</h3>
+              <p>Whether the expected blocks exist, are labelled plainly, and are in a useful order.</p>
+              <ul class="feature__list">
+                <li>Education, Skills, Projects, Experience</li>
+                <li>Creative headings a parser cannot file</li>
+                <li>Dates on every entry</li>
+                <li>Strongest sections first</li>
+              </ul>
+            </article>
+
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+              </span>
+              <h3>Writing</h3>
+              <p>Whether the words show what you did, or only that you were present.</p>
+              <ul class="feature__list">
+                <li>Bullets that open with an action verb</li>
+                <li>Results with numbers attached</li>
+                <li>"Responsible for", "team player", "passionate"</li>
+                <li>First-person pronouns and bullet length</li>
+              </ul>
+            </article>
+
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/></svg>
+              </span>
+              <h3>Skills</h3>
+              <p>Whether your skills are specific enough to be searched for, and backed up.</p>
+              <ul class="feature__list">
+                <li>Named, searchable technologies</li>
+                <li>Breadth across the stack</li>
+                <li>Skills that appear in an actual project</li>
+                <li>Padding like "MS Office" and "punctuality"</li>
+              </ul>
+            </article>
+
+            <article class="feature">
+              <span class="feature__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+              </span>
+              <h3>Presentation</h3>
+              <p>The details that read as carelessness on a one-page document.</p>
+              <ul class="feature__list">
+                <li>Father's name, date of birth, declaration</li>
+                <li>Length and page count</li>
+                <li>Commonly misspelled words</li>
+                <li>What your file is called in the inbox</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ privacy ============ -->
+      <section class="section" id="privacy">
+        <div class="container">
+          <div class="privacy-panel">
+            <div>
+              <span class="eyebrow eyebrow--numbered">Privacy</span>
+              <h2 class="section__title" style="margin-bottom: var(--space-6)">
+                Your resume never leaves your browser
+              </h2>
+
+              <ul class="privacy-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span>
+                    <b>There is no upload step</b>
+                    <span>
+                      The PDF and Word readers run as JavaScript on your machine. Your file is read
+                      from disk into memory and analysed there.
+                    </span>
+                  </span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  <span>
+                    <b>No account, no analytics, no trackers</b>
+                    <span>
+                      Nothing to sign up for and nothing to opt out of. The fonts are served from this
+                      domain too, so not even a font CDN sees you visit.
+                    </span>
+                  </span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>
+                    <b>You can check this yourself</b>
+                    <span>
+                      Open your browser's network tab, run a resume through, and watch it stay empty.
+                      Or turn off your Wi-Fi first — the app keeps working.
+                    </span>
+                  </span>
+                </li>
+              </ul>
+
+              <p style="margin-top: var(--space-6)">
+                <a href="/privacy">Read the full privacy note</a>
+              </p>
+            </div>
+
+            <div class="network-proof" aria-hidden="true">
+              <p class="network-proof__head">
+                <span>Network</span>
+                <span>· while analysing</span>
+              </p>
+              <p class="network-proof__row"><b>GET</b><i>/resume-score</i></p>
+              <p class="network-proof__row"><b>GET</b><i>/assets/app.js</i></p>
+              <p class="network-proof__row"><b>GET</b><i>/fonts/ibm-plex-sans-400-latin.woff2</i></p>
+              <p class="network-proof__row"><b>GET</b><i>/assets/vendor-pdf.js</i></p>
+              <p
+                class="network-proof__row"
+                style="margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgb(255 255 255 / 15%)"
+              >
+                <b>0</b><i>requests after your file is chosen</i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ pricing ============ -->
+      <section class="section section--alt" id="pricing">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">Pricing</span>
+            <h2 class="section__title">Free, and the free tier is the whole product</h2>
+            <p class="section__lede">
+              Everything described on this page costs nothing and always will. There is no credit
+              card, no trial, and no limit on how many times you run a check.
+            </p>
+          </div>
+
+          <div class="pricing">
+            <div class="plan" data-featured="true">
+              <div class="plan__head">
+                <h3 class="plan__name">Free</h3>
+                <span class="badge badge--good">Available now</span>
+              </div>
+              <p class="plan__price"><b>₹0</b><span>forever</span></p>
+              <p class="plan__blurb">Every check, every time, with nothing held back.</p>
+              <ul class="plan__features">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>All 30+ checks across six areas</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>PDF, Word, text and RTF</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Unlimited re-checks as you edit</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Job description keyword comparison</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Export the report as text or PDF</span>
+                </li>
+              </ul>
+              <p class="plan__cta">
+                <a class="btn btn--primary btn--block" href="/resume-score">Check my resume</a>
+              </p>
+            </div>
+
+            <div class="plan">
+              <div class="plan__head">
+                <h3 class="plan__name">Pro</h3>
+                <span class="badge">Not built yet</span>
+              </div>
+              <p class="plan__price"><b>—</b><span>undecided</span></p>
+              <p class="plan__blurb">
+                Ideas that need a server, and therefore need a real answer on privacy first. Listed
+                here so the roadmap is public, not to sell you anything.
+              </p>
+              <ul class="plan__features">
+                <li data-state="planned">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg>
+                  <span>Rewrite suggestions for weak bullets</span>
+                </li>
+                <li data-state="planned">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg>
+                  <span>Version history and side-by-side diffs</span>
+                </li>
+                <li data-state="planned">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg>
+                  <span>Tracking which version you sent where</span>
+                </li>
+              </ul>
+              <p class="plan__cta">
+                <a
+                  class="btn btn--secondary btn--block"
+                  href="https://github.com/ArshdeepGrover"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Follow along on GitHub
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ faq ============ -->
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">FAQ</span>
+            <h2 class="section__title">Reasonable questions</h2>
+          </div>
+
+          <div class="faq">
+            <details class="faq__item">
+              <summary>Is this the same software companies use?</summary>
+              <div class="faq__answer">
+                <p>
+                  No, and anything claiming otherwise is guessing. Applicant tracking systems are
+                  commercial products that differ from vendor to vendor, and none of them publish
+                  their scoring.
+                </p>
+                <p>
+                  What HireReady does is reproduce the part that is not secret: converting your file
+                  to text, which is exactly what every one of those systems has to do first. The rest
+                  of the checks are conventions recruiters and career services broadly agree on.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>Does a good score mean I will get the interview?</summary>
+              <div class="faq__answer">
+                <p>
+                  No. The score measures whether your resume presents your work clearly and survives
+                  being parsed. It cannot measure whether your experience fits the role, and no
+                  employer will ever see this number.
+                </p>
+                <p>
+                  Think of it as proofreading, not prediction. It removes the reasons you get filtered
+                  out for something other than your ability.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>How do I know my resume is not being uploaded?</summary>
+              <div class="faq__answer">
+                <p>
+                  Check it directly. Open developer tools, switch to the Network tab, then choose your
+                  file. No request appears, because the parsing happens in your browser.
+                </p>
+                <p>
+                  The stronger test: disconnect from the internet after the page has loaded, then run
+                  a resume through. It works, because there is no server to talk to.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>Why does it say two columns are a problem? Mine looks good.</summary>
+              <div class="faq__answer">
+                <p>
+                  It probably does look good, to you. The issue is that text extraction generally
+                  works line by line across the full width of the page, so a sidebar gets spliced into
+                  the middle of your main content. Your skills end up interleaved with your job dates.
+                </p>
+                <p>
+                  A single column is not more boring, it is just more robust. Save the layout work for
+                  a portfolio site, and link to it.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>It flagged something that is genuinely fine for me.</summary>
+              <div class="faq__answer">
+                <p>
+                  Then ignore it. These are heuristics tuned for people applying to their first job,
+                  and they will occasionally be wrong for you. A career-changer with ten years of
+                  history has different rules, and two pages may be correct.
+                </p>
+                <p>
+                  Every check explains its reasoning precisely so that you can disagree with it on
+                  purpose rather than by accident.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>Why is it free?</summary>
+              <div class="faq__answer">
+                <p>
+                  Because it costs almost nothing to run. There is no server doing the analysis and no
+                  database storing anything, so hosting it is the price of serving a few static files.
+                </p>
+                <p>
+                  It also started as a tool for students who were being told to pay for resume
+                  reviews that amounted to this checklist.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq__item">
+              <summary>What happens to the text I paste?</summary>
+              <div class="faq__answer">
+                <p>
+                  It is kept in your tab's session storage so that a refresh does not lose your work,
+                  and it is deleted when you close the tab. "Clear" wipes it immediately. It is never
+                  transmitted.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ closing cta ============ -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-band">
+            <h2>Find out what a screener <em>sees</em></h2>
+            <p>
+              One file, about a second, and a list short enough to actually finish. No account, and
+              nothing leaves your browser.
+            </p>
+            <a class="btn btn--primary btn--lg" href="/resume-score">Check my resume</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ author ============ -->
+      <section class="section" style="padding-top: 0">
+        <div class="container">
+          <aside class="maker">
+            <span class="maker__avatar" aria-hidden="true">AG</span>
+            <div class="maker__who">
+              <p class="eyebrow">Built by</p>
+              <strong class="maker__name">Arshdeep Singh Grover</strong>
+            </div>
+            <nav class="maker__links" aria-label="Author links">
+              <a href="https://arshdeepgrover.dev" rel="noopener noreferrer" target="_blank">
+                arshdeepgrover.dev
+              </a>
+              <a href="https://linkedin.com/in/ArshdeepGrover" rel="noopener noreferrer" target="_blank">
+                LinkedIn
+              </a>
+              <a href="https://github.com/ArshdeepGrover" rel="noopener noreferrer" target="_blank">
+                GitHub
+              </a>
+            </nav>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div>
+            <a class="brand" href="/">
+              <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <rect width="32" height="32" rx="4" fill="var(--ink)" />
+                <path d="M8.5 9V23M17.5 9V23" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+                <path d="M8.5 16h9" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" />
+                <circle cx="23.5" cy="22" r="3.2" fill="var(--mark)" />
+              </svg>
+              <span>Hire<em>Ready</em></span>
+            </a>
+            <p class="site-footer__blurb">
+              A resume checker for people applying for their first job. Free, open source, and it
+              never sees your file.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="site-footer__heading">Product</h2>
+            <ul class="site-footer__list">
+              <li><a href="/resume-score">Check a resume</a></li>
+              <li><a href="#how">How it works</a></li>
+              <li><a href="#checks">What it checks</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="site-footer__heading">More</h2>
+            <ul class="site-footer__list">
+              <li><a href="/privacy">Privacy</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li>
+                <a href="https://github.com/ArshdeepGrover" rel="noopener noreferrer" target="_blank">GitHub</a>
+              </li>
+              <li>
+                <a href="https://arshdeepgrover.dev" rel="noopener noreferrer" target="_blank">The author</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="site-footer__base">
+          <p>&copy; <span data-year>2026</span> HireReady. Built by Arshdeep Singh Grover.</p>
+          <p>Your resume is read in your browser and never uploaded.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,219 @@
+/**
+ * Design tokens.
+ *
+ * The visual idea is a resume on a reviewer's desk: off-white paper, blue-black
+ * ink, a fountain-pen blue for anything you can act on, a yellow highlighter
+ * for what matters, and a red pen for what fails. No gradients, no glow, no
+ * pill-shaped everything. Every text pairing meets WCAG AA in both themes.
+ */
+
+:root {
+  /* ---- type ---- */
+  --font-display: 'Newsreader', 'Iowan Old Style', 'Charter', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.3rem, 0.5vw + 1.18rem, 1.5rem);
+  --text-2xl: clamp(1.6rem, 1.2vw + 1.3rem, 2.05rem);
+  --text-3xl: clamp(2rem, 2.2vw + 1.4rem, 2.85rem);
+  --text-4xl: clamp(2.4rem, 4vw + 1.2rem, 4rem);
+  --text-hero: clamp(2.7rem, 5.6vw + 0.9rem, 5.1rem);
+
+  --leading-tight: 1.04;
+  --leading-snug: 1.2;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.68;
+
+  --tracking-tight: -0.022em;
+  --tracking-snug: -0.012em;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.14em;
+
+  /* ---- space: 4px base ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --section-y: clamp(3.5rem, 7vw, 6.5rem);
+
+  /* ---- shape: square-ish, like paper and index cards ---- */
+  --radius-sm: 2px;
+  --radius: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-pill: 999px;
+
+  --container: 1180px;
+  --container-narrow: 760px;
+
+  /* ---- motion ---- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 120ms;
+  --duration: 200ms;
+  --duration-slow: 420ms;
+
+  --z-sticky: 50;
+  --z-toast: 90;
+
+  color-scheme: light;
+}
+
+/* ---------- light (default) ---------- */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --paper: #f4f2ec;
+  --paper-alt: #ebe8e0;
+  --surface: #fdfcf9;
+  --surface-sunk: #f0ede5;
+  --surface-raised: #ffffff;
+
+  --ink: #15181f;
+  --ink-muted: #4a5061;
+  --ink-faint: #5f6574;
+
+  --line: #dcd8ce;
+  --line-strong: #bdb8ab;
+
+  /* Fountain-pen blue: links, primary actions, focus. */
+  --accent: #2a3f9d;
+  --accent-hover: #1f2f7a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e7eaf6;
+  --accent-line: #c3caea;
+
+  /* Highlighter yellow: the mark a reviewer leaves on the page. Always sits
+  behind ink-coloured text, never used as a text colour itself. */
+  --mark: #f2cd2c;
+  --mark-soft: #faeca0;
+
+  --good: #1b6b45;
+  --good-soft: #e3efe6;
+  --good-line: #b5d3c0;
+
+  --warn: #7a5d00;
+  --warn-soft: #f6efd4;
+  --warn-line: #ded096;
+
+  /* Red pen. */
+  --bad: #b3261e;
+  --bad-soft: #f8e5e2;
+  --bad-line: #ebbcb6;
+
+  --shadow-sm: none;
+  --shadow: 0 1px 0 rgb(21 24 31 / 5%);
+  --shadow-lg: 0 1px 0 rgb(21 24 31 / 6%), 0 22px 44px -32px rgb(21 24 31 / 38%);
+  --ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
+
+  --grain-opacity: 0;
+}
+
+/* ---------- dark ---------- */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0e1014;
+  --paper-alt: #13161c;
+  --surface: #161920;
+  --surface-sunk: #1c2029;
+  --surface-raised: #1a1d25;
+
+  --ink: #eceef2;
+  --ink-muted: #a4a9b6;
+  --ink-faint: #8a90a0;
+
+  --line: #262a34;
+  --line-strong: #383d4a;
+
+  --accent: #a3b3ff;
+  --accent-hover: #c0cbff;
+  --accent-ink: #0d1233;
+  --accent-soft: #1a2042;
+  --accent-line: #2f3a72;
+
+  --mark: #e6c737;
+  --mark-soft: #4a4116;
+
+  --good: #62c697;
+  --good-soft: #10241b;
+  --good-line: #1f4533;
+
+  --warn: #d9ba52;
+  --warn-soft: #252010;
+  --warn-line: #4a3f1b;
+
+  --bad: #ff8e84;
+  --bad-soft: #2b1513;
+  --bad-line: #52271f;
+
+  --shadow-sm: none;
+  --shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  --shadow-lg: 0 1px 0 rgb(0 0 0 / 50%), 0 24px 48px -30px rgb(0 0 0 / 90%);
+  --ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
+
+  --grain-opacity: 0;
+}
+
+/*
+ * Respect the OS preference until the visitor picks a theme explicitly, at
+ * which point data-theme on <html> takes over. The script in each page's head
+ * sets data-theme before first paint, so this block only covers the no-JS case.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --paper: #0e1014;
+    --paper-alt: #13161c;
+    --surface: #161920;
+    --surface-sunk: #1c2029;
+    --surface-raised: #1a1d25;
+
+    --ink: #eceef2;
+    --ink-muted: #a4a9b6;
+    --ink-faint: #8a90a0;
+
+    --line: #262a34;
+    --line-strong: #383d4a;
+
+    --accent: #a3b3ff;
+    --accent-hover: #c0cbff;
+    --accent-ink: #0d1233;
+    --accent-soft: #1a2042;
+    --accent-line: #2f3a72;
+
+    --mark: #e6c737;
+    --mark-soft: #4a4116;
+
+    --good: #62c697;
+    --good-soft: #10241b;
+    --good-line: #1f4533;
+
+    --warn: #d9ba52;
+    --warn-soft: #252010;
+    --warn-line: #4a3f1b;
+
+    --bad: #ff8e84;
+    --bad-soft: #2b1513;
+    --bad-line: #52271f;
+
+    --shadow-sm: none;
+    --shadow: 0 1px 0 rgb(0 0 0 / 40%);
+    --shadow-lg: 0 1px 0 rgb(0 0 0 / 50%), 0 24px 48px -30px rgb(0 0 0 / 90%);
+    --ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
+
+    --grain-opacity: 0;
+  }
+}

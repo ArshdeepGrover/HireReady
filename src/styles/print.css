@@ -1,0 +1,133 @@
+/**
+ * Print and PDF export.
+ *
+ * "Save as PDF" from the browser is how a report leaves the app. Doing it this
+ * way means no PDF library, no server, and nothing to upload.
+ */
+
+@media print {
+  @page {
+    margin: 16mm 14mm;
+  }
+
+  :root {
+    /* Force the light palette: dark backgrounds waste ink and print badly. */
+    --paper: #ffffff;
+    --paper-alt: #ffffff;
+    --surface: #ffffff;
+    --surface-sunk: #ffffff;
+    --ink: #000000;
+    --ink-muted: #333333;
+    --ink-faint: #555555;
+    --line: #cccccc;
+    --line-strong: #999999;
+    --accent: #1f2f7a;
+    --accent-soft: #ffffff;
+    --good: #14603f;
+    --warn: #6d4804;
+    --bad: #8c2016;
+    --shadow: none;
+    --shadow-sm: none;
+    --shadow-lg: none;
+  }
+
+  body {
+    background: #fff;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  /* Chrome only prints backgrounds when asked, and the report reads fine
+     without them, so drop them rather than depend on a print setting. */
+  * {
+    box-shadow: none !important;
+  }
+
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .app-col--input,
+  .results-bar__actions,
+  .theme-toggle,
+  .toast,
+  .sample-row,
+  .empty {
+    display: none !important;
+  }
+
+  .app-grid {
+    display: block;
+  }
+
+  .app-main {
+    padding: 0;
+  }
+
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  /* Keep a check and its explanation together across a page break. */
+  .check,
+  .action,
+  .check-group,
+  .scoreboard,
+  .plan,
+  .faq__item {
+    break-inside: avoid;
+  }
+
+  .check-group__head {
+    break-after: avoid;
+  }
+
+  .card,
+  .scoreboard {
+    border: 1px solid #ccc;
+    padding: 10pt 12pt;
+  }
+
+  .app-col {
+    gap: 12pt;
+  }
+
+  /* The gauge is a rotated SVG; a plain number prints more reliably. */
+  .gauge svg {
+    rotate: none;
+  }
+
+  .faq__item summary::after {
+    display: none;
+  }
+
+  details {
+    /* Ensure collapsed content is still printed. */
+    display: block;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Print the destination of real links, but not of in-page anchors. */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 8pt;
+    color: #555;
+    word-break: break-all;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
