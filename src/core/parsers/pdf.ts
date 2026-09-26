@@ -11,6 +11,7 @@ import * as pdfjs from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { isBulletLine, normaliseText } from '../text';
 import type { ParseMeta, ParsedResume, ResumeLine } from '../types';
+import type { ParseProgressFn } from './index';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
@@ -152,7 +153,11 @@ function looksLikeBrokenGlyphs(text: string): boolean {
   return letters / stripped.length < 0.45;
 }
 
-export async function parsePdf(data: ArrayBuffer, fileName: string): Promise<ParsedResume> {
+export async function parsePdf(
+  data: ArrayBuffer,
+  fileName: string,
+  onProgress?: ParseProgressFn,
+): Promise<ParsedResume> {
   // Keep the loading task: destroying it is what tears down the worker, and
   // without that a few uploads in a row leak a worker each.
   const loadingTask = pdfjs.getDocument({
@@ -169,6 +174,10 @@ export async function parsePdf(data: ArrayBuffer, fileName: string): Promise<Par
     useWasm: false,
   });
   const pdf = await loadingTask.promise;
+
+  // The page count is the first thing worth telling the user, since it decides
+  // how long the rest of this will take.
+  onProgress?.({ page: 0, pages: pdf.numPages });
 
   const lines: ResumeLine[] = [];
   const imageOnlyPages: number[] = [];
@@ -225,6 +234,7 @@ export async function parsePdf(data: ArrayBuffer, fileName: string): Promise<Par
       }
 
       page.cleanup();
+      onProgress?.({ page: pageNumber, pages: pdf.numPages });
     }
   } finally {
     await loadingTask.destroy();

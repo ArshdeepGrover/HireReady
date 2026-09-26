@@ -43,7 +43,9 @@ echo "Generating PDF fixtures"
 node scripts/make-test-pdfs.mjs "$FIXTURES" || exit 1
 
 echo "Starting dev server"
-npx vite --port "$PORT" --strictPort > "$TMP/server.log" 2>&1 &
+# Bound explicitly to 127.0.0.1: left to itself Vite may listen on IPv6 only,
+# and every curl and Chrome call below uses the IPv4 loopback.
+npx vite --port "$PORT" --strictPort --host 127.0.0.1 > "$TMP/server.log" 2>&1 &
 SERVER_PID=$!
 
 for _ in $(seq 1 40); do
@@ -101,6 +103,9 @@ expect "six category bars"        "$TMP/app.html" 'category__name'
 expect "checks rendered"          "$TMP/app.html" 'class="check" data-state='
 expect "actions rendered"         "$TMP/app.html" 'class="action" data-state='
 expect "check groups rendered"    "$TMP/app.html" 'class="check-group"'
+expect "check groups collapsible" "$TMP/app.html" '<details class="check-group"'
+expect "filter chips rendered"    "$TMP/app.html" 'class="chip" type="button" data-filter='
+expect "actions link to checks"   "$TMP/app.html" 'data-jump='
 reject "no boot error shown"      "$TMP/app.html" 'Something went wrong starting'
 
 echo

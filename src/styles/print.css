@@ -51,7 +51,17 @@
   .theme-toggle,
   .toast,
   .sample-row,
-  .empty {
+  .empty,
+  /* Interactive-only chrome: meaningless on paper. */
+  .chips,
+  .progress,
+  .action__jump,
+  .score-delta {
+    display: none !important;
+  }
+
+  /* The disclosure caret has nothing to disclose once everything is expanded. */
+  .check-group__name::before {
     display: none !important;
   }
 

@@ -10,7 +10,7 @@ import { matchJobDescription, MIN_POSTING_CHARS } from '@core/jobmatch';
 import { fromPastedText, parseResumeFile, UnsupportedFileError } from '@core/parsers';
 import { SAMPLE_JOB_DESCRIPTION, SAMPLES } from '@core/samples';
 import { analyse } from '@core/score';
-import type { JobMatch, ParsedResume, Report } from '@core/types';
+import type { CategoryId, JobMatch, ParsedResume, Report } from '@core/types';
 import { debounce, qs, qsa, replaceChildren } from '@lib/dom';
 import { loadDraft, saveDraft } from '@lib/draft';
 import {
@@ -19,13 +19,24 @@ import {
   reportFileName,
   reportToMarkdown,
 } from './export';
-import { renderActions, renderChecks, renderMatch, renderScoreboard, type ReportRefs } from './render';
+import {
+  renderActions,
+  renderCheckFilter,
+  renderChecks,
+  renderMatch,
+  renderScoreboard,
+  type CheckFilter,
+  type ReportRefs,
+} from './render';
 
 /** Below this the analysis is noise rather than feedback. */
 const MIN_RESUME_CHARS = 120;
 
 /** Pause after typing before re-running, long enough not to fight the user. */
 const TYPING_DEBOUNCE_MS = 500;
+
+/** How long a jumped-to check stays highlighted. */
+const FLASH_MS = 1600;
 
 type StatusTone = 'neutral' | 'busy' | 'success' | 'error';
 
@@ -45,11 +56,14 @@ export function initApp(): void {
   const emptyEl = qs('[data-empty]');
   const reportEl = qs('[data-report]');
   const toastEl = qs('[data-toast]');
+  const progressEl = qs('[data-progress]');
+  const progressBar = qs('[data-progress-bar]');
 
   const refs: ReportRefs = {
     scoreboard: qs('[data-scoreboard]'),
     gauge: qs<SVGCircleElement>('[data-gauge]'),
     score: qs('[data-score]'),
+    scoreDelta: qs('[data-score-delta]'),
     band: qs('[data-band]'),
     bandMessage: qs('[data-band-message]'),
     stats: qs('[data-stats]'),
@@ -57,6 +71,7 @@ export function initApp(): void {
     actions: qs('[data-actions]'),
     checks: qs('[data-checks]'),
     checkCount: qs('[data-check-count]'),
+    checkFilter: qs('[data-check-filter]'),
     reportMeta: qs('[data-report-meta]'),
     matchPanel: qs('[data-match-panel]'),
     matchBody: qs('[data-match-body]'),
@@ -73,6 +88,11 @@ export function initApp(): void {
   let currentReport: Report | null = null;
   let currentMatch: JobMatch | null = null;
   let busy = false;
+  /** Drives the "+3" chip, so it reflects the last score the user actually saw. */
+  let lastShownScore: number | null = null;
+  let checkFilter: CheckFilter = 'all';
+  /** Only holds categories the user has clicked; the rest use the default. */
+  const openGroups = new Map<CategoryId, boolean>();
   /**
    * The posting is only compared when asked. Once it has been, later edits to
    * the resume keep the comparison current without another click.
@@ -131,6 +151,36 @@ export function initApp(): void {
     postingDot.hidden = postingWords === 0;
   }
 
+  /* ---------------- progress ---------------- */
+
+  /**
+   * @param value 0..100 for a known fraction, `'indeterminate'` once reading has
+   *              started but before there is anything to measure, `null` to hide.
+   */
+  function setProgress(value: number | 'indeterminate' | null): void {
+    if (value === null) {
+      progressEl.hidden = true;
+      progressEl.removeAttribute('aria-valuenow');
+      progressEl.dataset['indeterminate'] = 'false';
+      progressBar.style.width = '0%';
+      return;
+    }
+
+    progressEl.hidden = false;
+
+    if (value === 'indeterminate') {
+      progressEl.dataset['indeterminate'] = 'true';
+      progressEl.removeAttribute('aria-valuenow');
+      progressBar.style.width = '100%';
+      return;
+    }
+
+    const pct = Math.round(Math.min(100, Math.max(0, value)));
+    progressEl.dataset['indeterminate'] = 'false';
+    progressEl.setAttribute('aria-valuenow', String(pct));
+    progressBar.style.width = `${pct}%`;
+  }
+
   let toastTimer: number | undefined;
   function toast(message: string): void {
     toastEl.textContent = message;
@@ -186,12 +236,52 @@ export function initApp(): void {
   }
 
   function showReport(report: Report): void {
+    // Captured before the assignment so the delta compares against what was on
+    // screen, not against this same report.
+    const previous = lastShownScore;
     currentReport = report;
     emptyEl.hidden = true;
     reportEl.hidden = false;
-    renderScoreboard(refs, report);
+    renderScoreboard(refs, report, previous);
     renderActions(refs, report);
-    renderChecks(refs, report);
+    renderCheckFilter(refs, report, checkFilter);
+    renderChecks(refs, report, { filter: checkFilter, open: openGroups });
+    lastShownScore = report.score;
+  }
+
+  /** Redraws the checklist alone, for filter and expand changes. */
+  function redrawChecks(): void {
+    if (!currentReport) return;
+    renderCheckFilter(refs, currentReport, checkFilter);
+    renderChecks(refs, currentReport, { filter: checkFilter, open: openGroups });
+  }
+
+  /**
+   * Brings one check into view from the actions list: drops any filter hiding
+   * it, opens its group, then scrolls and highlights it.
+   */
+  function revealCheck(id: string): void {
+    if (!currentReport) return;
+    const check = currentReport.checks.find((entry) => entry.id === id);
+    if (!check) return;
+
+    checkFilter = 'all';
+    openGroups.set(check.category, true);
+    redrawChecks();
+
+    // CSS.escape because check ids contain a dot, e.g. "parse.text".
+    const target = refs.checks.querySelector<HTMLElement>(
+      `[data-check-id="${CSS.escape(id)}"]`,
+    );
+    if (!target) return;
+
+    target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    // tabindex="-1" on the row makes this land somewhere useful for a screen reader.
+    target.focus({ preventScroll: true });
+    target.dataset['flash'] = 'true';
+    window.setTimeout(() => {
+      delete target.dataset['flash'];
+    }, FLASH_MS);
   }
 
   /**
@@ -244,10 +334,24 @@ export function initApp(): void {
     busy = true;
     fileInput.value = '';
     selectTab('resume');
+    // A new document is not a change to the old one, so there is no delta to show.
+    lastShownScore = null;
     setStatus(`Reading ${file.name}…`, 'busy');
+    setProgress('indeterminate');
+    dropzone.disabled = true;
+    reportEl.setAttribute('aria-busy', 'true');
 
     try {
-      const doc = await parseResumeFile(file);
+      const doc = await parseResumeFile(file, ({ page, pages }) => {
+        if (pages <= 0) return;
+        setProgress((page / pages) * 100);
+        setStatus(
+          page === 0
+            ? `Reading ${file.name} - ${pages} ${pages === 1 ? 'page' : 'pages'}…`
+            : `Reading page ${page} of ${pages}…`,
+          'busy',
+        );
+      });
       resumeInput.value = doc.text;
       saveDraft({ resume: doc.text });
       refreshCounts();
@@ -273,6 +377,9 @@ export function initApp(): void {
       setStatus(`${message} You can paste the text instead.`, 'error');
     } finally {
       busy = false;
+      setProgress(null);
+      dropzone.disabled = false;
+      reportEl.removeAttribute('aria-busy');
     }
   }
 
@@ -356,6 +463,8 @@ export function initApp(): void {
       const sample = SAMPLES.find((entry) => entry.id === which);
       if (!sample) return;
       currentDoc = null;
+      // Swapping documents, so comparing scores would be meaningless.
+      lastShownScore = null;
       resumeInput.value = sample.text;
       saveDraft({ resume: sample.text });
       refreshCounts();
@@ -378,15 +487,92 @@ export function initApp(): void {
     currentDoc = null;
     currentReport = null;
     currentMatch = null;
+    lastShownScore = null;
+    checkFilter = 'all';
+    openGroups.clear();
     saveDraft({ resume: '' });
     reportEl.hidden = true;
     emptyEl.hidden = false;
     replaceChildren(refs.actions);
     replaceChildren(refs.checks);
+    replaceChildren(refs.checkFilter);
+    replaceChildren(refs.scoreDelta);
+    refs.scoreDelta.hidden = true;
     renderMatch(refs, null, null);
     setStatus('');
     refreshCounts();
     resumeInput.focus();
+  });
+
+  /* ---------------- wiring: checklist filter and navigation ---------------- */
+
+  /*
+   * A collapsed <details> and a filtered list would both print incomplete, and
+   * "Save as PDF" is how a report leaves the app. So everything is expanded and
+   * unfiltered for the duration of the print, then put back. `printing` stops
+   * the toggle listener below from mistaking this for a user choice.
+   */
+  let printing = false;
+  let filterBeforePrint: CheckFilter = 'all';
+
+  window.addEventListener('beforeprint', () => {
+    printing = true;
+    filterBeforePrint = checkFilter;
+    if (checkFilter !== 'all') {
+      checkFilter = 'all';
+      redrawChecks();
+    }
+    for (const group of qsa<HTMLDetailsElement>('details.check-group', refs.checks)) {
+      group.open = true;
+    }
+  });
+
+  window.addEventListener('afterprint', () => {
+    checkFilter = filterBeforePrint;
+    // Re-rendering restores the collapse state from `openGroups`.
+    redrawChecks();
+    printing = false;
+  });
+
+  refs.checkFilter.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-filter]');
+    if (!button) return;
+    const next = button.dataset['filter'] as CheckFilter | undefined;
+    if (!next || next === checkFilter) return;
+    checkFilter = next;
+    redrawChecks();
+  });
+
+  // `toggle` does not bubble, so this listens in the capture phase.
+  refs.checks.addEventListener(
+    'toggle',
+    (event) => {
+      if (printing) return;
+      const details = event.target;
+      if (!(details instanceof HTMLDetailsElement)) return;
+      const category = details.dataset['category'] as CategoryId | undefined;
+      /*
+       * Only remember choices made while everything is showing. A filtered view
+       * forces groups open, so its state says nothing about what the user wants.
+       */
+      if (category && checkFilter === 'all') openGroups.set(category, details.open);
+    },
+    true,
+  );
+
+  refs.actions.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-jump]');
+    const id = button?.dataset['jump'];
+    if (id) revealCheck(id);
+  });
+
+  refs.matchBody.addEventListener('click', (event) => {
+    if (!(event.target as HTMLElement | null)?.closest('[data-copy-missing]')) return;
+    if (!currentMatch) return;
+    const terms = currentMatch.missing.map((term) => term.term).join(', ');
+    void copyToClipboard(terms).then((ok) => {
+      toast(ok ? 'Missing terms copied to your clipboard.' : 'Could not copy those terms.');
+    });
   });
 
   /* ---------------- wiring: export ---------------- */

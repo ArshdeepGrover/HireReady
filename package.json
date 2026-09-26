@@ -20,7 +20,8 @@
     "fonts": "node scripts/fetch-fonts.mjs",
     "clean": "rm -rf dist .tmp node_modules/.vite",
     "smoke": "tsx scripts/smoke.ts",
-    "verify": "bash scripts/verify-browser.sh"
+    "verify": "bash scripts/verify-browser.sh",
+    "verify:ui": "node scripts/verify-ui.mjs"
   },
   "dependencies": {
     "jszip": "3.10.2",

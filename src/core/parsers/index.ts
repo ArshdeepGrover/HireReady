@@ -26,7 +26,26 @@ export class UnsupportedFileError extends Error {
   }
 }
 
-export async function parseResumeFile(file: File): Promise<ParsedResume> {
+/**
+ * Progress while a file is being read.
+ *
+ * `pages` is 0 until the page count is known, and for formats that have no
+ * pages worth reporting. A reader that cannot report granular progress simply
+ * never calls back, so the UI must cope with a single indeterminate stretch.
+ */
+export interface ParseProgress {
+  /** Pages finished so far. */
+  page: number;
+  /** Total pages, or 0 while unknown. */
+  pages: number;
+}
+
+export type ParseProgressFn = (progress: ParseProgress) => void;
+
+export async function parseResumeFile(
+  file: File,
+  onProgress?: ParseProgressFn,
+): Promise<ParsedResume> {
   if (file.size === 0) throw new UnsupportedFileError('That file is empty.');
   if (file.size > MAX_FILE_BYTES) {
     throw new UnsupportedFileError(
@@ -59,7 +78,7 @@ export async function parseResumeFile(file: File): Promise<ParsedResume> {
 
   if (lower.endsWith('.pdf') || hasPdfSignature(buffer)) {
     const { parsePdf } = await import('./pdf');
-    return parsePdf(buffer, name);
+    return parsePdf(buffer, name, onProgress);
   }
 
   if (lower.endsWith('.docx') || hasZipSignature(buffer)) {

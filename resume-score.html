@@ -166,6 +166,18 @@
                   <button class="btn btn--secondary" type="button" data-clear>Clear</button>
                 </div>
 
+                <div
+                  class="progress"
+                  data-progress
+                  role="progressbar"
+                  aria-label="Reading your file"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  hidden
+                >
+                  <span class="progress__bar" data-progress-bar></span>
+                </div>
+
                 <p class="status" data-status role="status" aria-live="polite"></p>
 
                 <p class="sample-row">
@@ -261,6 +273,7 @@
                     <span class="gauge__value" data-score>-</span>
                     <span class="gauge__unit">of 100</span>
                   </p>
+                  <p class="score-delta" data-score-delta role="status" aria-live="polite" hidden></p>
                 </div>
 
                 <div class="verdict">
@@ -299,6 +312,7 @@
                   <h2 class="card__title" id="checks-heading">Every check</h2>
                   <span class="eyebrow" data-check-count></span>
                 </div>
+                <div class="chips" data-check-filter role="group" aria-label="Filter checks"></div>
                 <div data-checks></div>
               </section>
 
